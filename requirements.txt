@@ -1,0 +1,9 @@
+Django==2.1.8
+django-allauth==0.42.0
+django-cors-headers==3.4.0
+mysql-connector-python==8.0.20
+requests==2.24.0
+selenium==3.141.0
+PyMySQL==0.10.0
+
+

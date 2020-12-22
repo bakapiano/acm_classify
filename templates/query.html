@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query - ACM-Classify</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.0-alpha.1/echarts.min.js"></script>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" sizes="16x16">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand mr-0 mr-md-2" aria-label="NamoFun" href="/">
+        <span class="">ACM-Classify</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuDefault"
+            aria-controls="menuDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menuDefault">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/query">Query</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/statistics">Statistics</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto" id="navbar-logout" style="visibility:hidden">
+            <li class="nav-item">
+                <a class="nav-link active"><i class="fa fa-github"> bakapiano</i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/accounts/logout" id="logout-action">退出</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto" , id="navbar-login" style="visibility:hidden">
+            <li class="nav-item">
+                <a class="nav-link" href="/accounts/github/login/?process=login"><i class="fa fa-sign-in"></i> LOGIN
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="jumbotron text-center">
+    <div class="container">
+        <h1 class="display-5">Query</h1>
+        <p>查询题量 & 标签</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-3">
+            <div class="input-group input-group-sm pl-3">
+                <input id="set-all" type="text" class="form-control" placeholder="设置同一用户名"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
+        </div>
+        <div clas="col-9">
+            <div class="btn-group-sm">
+                <button id="query-btn" type="button" class="btn btn-primary" style="width:65px;" data-toggle="tooltip"
+                        title="查询并分析标签">QUERY
+                </button>
+                <button id="reset-btn" type="button" class="btn btn-light" style="width:65px;" data-toggle="tooltip"
+                        title="重置">RESET
+                </button>
+                <button id="load-btn" type="button" class="btn btn-light" style="width:65px;" data-toggle="tooltip"
+                        title="获取保存的用户名">LOAD
+                </button>
+                <button id="save-btn" type="button" class="btn btn-light" style="width:65px;" data-toggle="tooltip"
+                        title="保存用户名">SAVE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4" id="main">
+        <div class="col-lg-4 col-md-6 mb-4 px-3 worker">
+            <div class="card">
+                <div class="card-header pb-1">
+                    <a class="text-dark py-1" href="https://www.luogu.com.cn/" target="_blank">Luogu</a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i
+                            class=" card-link fa fa-close close-worker"></i></a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i class="fa fa-plus-circle clone-worker"></i></a>
+                </div>
+                <div class="card-body pt-2 pb-3">
+                    <p class="text-muted mb-1 mt-0"><small>Username</small></p>
+                    <div class="input-group input-group-sm mb-2">
+                        <input type="text" class="luogu form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4 px-3 worker">
+            <div class="card">
+                <div class="card-header pb-1">
+                    <a class="text-dark py-1" href="https://www.luogu.com.cn/" target="_blank">Codeforces</a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i
+                            class=" card-link fa fa-close close-worker"></i></a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i class="fa fa-plus-circle clone-worker"></i></a>
+                </div>
+                <div class="card-body pt-2 pb-3">
+                    <p class="text-muted mb-1 mt-0"><small>Username</small></p>
+                    <div class="input-group input-group-sm mb-2">
+                        <input type="text" class="codeforces form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4 px-3 worker">
+            <div class="card">
+                <div class="card-header pb-1">
+                    <a class="text-dark py-1" href="https://www.luogu.com.cn/" target="_blank">POJ</a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i
+                            class=" card-link fa fa-close close-worker"></i></a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i class="fa fa-plus-circle clone-worker"></i></a>
+                </div>
+                <div class="card-body pt-2 pb-3">
+                    <p class="text-muted mb-1 mt-0"><small>Username</small></p>
+                    <div class="input-group input-group-sm mb-2">
+                        <input type="text" class="poj form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mb-4 px-3 worker">
+            <div class="card">
+                <div class="card-header pb-1">
+                    <a class="text-dark py-1" href="https://www.luogu.com.cn/" target="_blank">HDU</a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i
+                            class=" card-link fa fa-close close-worker"></i></a>
+                    <a type="button" class="py-1 btn float-right btn-sm"><i class="fa fa-plus-circle clone-worker"></i></a>
+                </div>
+                <div class="card-body pt-2 pb-3">
+                    <p class="text-muted mb-1 mt-0"><small>Username</small></p>
+                    <div class="input-group input-group-sm mb-2">
+                        <input type="text" class="hdu form-control" aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<footer class="footer mt-auto py-3">
+    <div class="container text-center">
+        <span class="text-muted">© 2020 bakapiano </span>
+    </div>
+</footer>
+
+</body>
+
+    <script src="{% static "js/query.js" %}"></script>
+
+</html>
